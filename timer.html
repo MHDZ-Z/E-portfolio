@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer - Student Study Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #f39c12;
+            --text-color: #2c3e50;
+            --bg-color: #ecf0f1;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+            --spacing-unit: 16px;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: var(--spacing-unit);
+            box-shadow: var(--shadow);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: calc(var(--spacing-unit) * 4);
+            text-align: center;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+        
+        .timer-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: calc(var(--spacing-unit) * 4);
+            box-shadow: var(--shadow);
+        }
+        
+        .timer-display {
+            font-size: 96px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: calc(var(--spacing-unit) * 2) 0;
+        }
+        
+        .timer-phase {
+            font-size: 24px;
+            color: #7f8c8d;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+        
+        .timer-controls {
+            display: flex;
+            gap: var(--spacing-unit);
+            justify-content: center;
+            margin-top: calc(var(--spacing-unit) * 3);
+        }
+        
+        .btn {
+            padding: 16px 32px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-secondary {
+            background-color: #95a5a6;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+        
+        .session-count {
+            margin-top: calc(var(--spacing-unit) * 3);
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        
+        footer {
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 2);
+            background-color: var(--text-color);
+            color: white;
+            margin-top: calc(var(--spacing-unit) * 4);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">📚 Student Study Hub</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="planner.html">Planner</a></li>
+                <li><a href="assignments.html">Assignments</a></li>
+                <li><a href="timer.html" class="active">Timer</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="goals.html">Goals</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>⏱️ Pomodoro Timer</h1>
+        
+        <div class="timer-container">
+            <div class="timer-phase" id="timerPhase">Work Session</div>
+            <div class="timer-display" id="timerDisplay">25:00</div>
+            
+            <div class="timer-controls">
+                <button class="btn" id="startBtn" onclick="startTimer()">Start</button>
+                <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
+            </div>
+            
+            <div class="session-count">
+                Sessions Completed: <strong id="sessionCount">0</strong>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Mahdi | Jewels International School</p>
+    </footer>
+    
+    <script>
+        let timerInterval = null;
+        let workDuration = 25 * 60; // 25 minutes in seconds
+        let breakDuration = 5 * 60; // 5 minutes
+        let timeRemaining = workDuration;
+        let isWorkSession = true;
+        let isPaused = true;
+        let sessionsCompleted = parseInt(localStorage.getItem('pomodoroSessions') || '0');
+        
+        function displayTime() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timerDisplay').textContent = display;
+        }
+        
+        function updatePhase() {
+            document.getElementById('timerPhase').textContent = isWorkSession ? 'Work Session' : 'Break Time';
+        }
+        
+        function startTimer() {
+            if (isPaused) {
+                isPaused = false;
+                document.getElementById('startBtn').textContent = 'Pause';
+                timerInterval = setInterval(updateTimer, 1000);
+            } else {
+                pauseTimer();
+            }
+        }
+        
+        function pauseTimer() {
+            isPaused = true;
+            clearInterval(timerInterval);
+            document.getElementById('startBtn').textContent = 'Start';
+        }
+        
+        function updateTimer() {
+            if (timeRemaining > 0) {
+                timeRemaining--;
+                displayTime();
+            } else {
+                completeSession();
+            }
+        }
+        
+        function completeSession() {
+            clearInterval(timerInterval);
+            isPaused = true;
+            
+            if (isWorkSession) {
+                sessionsCompleted++;
+                localStorage.setItem('pomodoroSessions', sessionsCompleted);
+                document.getElementById('sessionCount').textContent = sessionsCompleted;
+                alert('Work session complete! Time for a break.');
+                isWorkSession = false;
+                timeRemaining = breakDuration;
+            } else {
+                alert('Break complete! Ready for another session?');
+                isWorkSession = true;
+                timeRemaining = workDuration;
+            }
+            
+            updatePhase();
+            displayTime();
+            document.getElementById('startBtn').textContent = 'Start';
+        }
+        
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isPaused = true;
+            isWorkSession = true;
+            timeRemaining = workDuration;
+            displayTime();
+            updatePhase();
+            document.getElementById('startBtn').textContent = 'Start';
+        }
+        
+        // Initialize display
+        document.getElementById('sessionCount').textContent = sessionsCompleted;
+        displayTime();
+        updatePhase();
+    </script>
+</body>
+</html>

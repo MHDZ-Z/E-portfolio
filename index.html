@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Study Hub - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #f39c12;
+            --text-color: #2c3e50;
+            --bg-color: #ecf0f1;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+            --spacing-unit: 16px;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: var(--spacing-unit);
+            box-shadow: var(--shadow);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: calc(var(--spacing-unit) * 2);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 4) 0;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: var(--spacing-unit);
+            color: var(--primary-color);
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: #7f8c8d;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: calc(var(--spacing-unit) * 2);
+            margin-top: calc(var(--spacing-unit) * 3);
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            padding: calc(var(--spacing-unit) * 2);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: var(--spacing-unit);
+        }
+        
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-unit);
+        }
+        
+        .feature-card p {
+            color: #7f8c8d;
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        footer {
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 2);
+            background-color: var(--text-color);
+            color: white;
+            margin-top: calc(var(--spacing-unit) * 4);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: var(--spacing-unit);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">📚 Student Study Hub</div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="planner.html">Planner</a></li>
+                <li><a href="assignments.html">Assignments</a></li>
+                <li><a href="timer.html">Timer</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="goals.html">Goals</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h1>Welcome to Student Study Hub</h1>
+            <p>Your all-in-one study companion for better organization and productivity</p>
+        </section>
+        
+        <section class="features">
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Study Planner</h3>
+                    <p>Plan your weekly study sessions and stay organized</p>
+                    <a href="planner.html" class="btn">Go to Planner →</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">✓</div>
+                    <h3>Assignment Tracker</h3>
+                    <p>Track all your homework and project deadlines</p>
+                    <a href="assignments.html" class="btn">Track Assignments →</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⏱️</div>
+                    <h3>Pomodoro Timer</h3>
+                    <p>Stay focused with the Pomodoro Technique</p>
+                    <a href="timer.html" class="btn">Start Timer →</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Resources Library</h3>
+                    <p>Organize your study materials in one place</p>
+                    <a href="resources.html" class="btn">Browse Resources →</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Goal Tracker</h3>
+                    <p>Set and track your academic goals</p>
+                    <a href="goals.html" class="btn">Track Goals →</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Progress Dashboard</h3>
+                    <p>View your study statistics and progress</p>
+                    <a href="#" class="btn">View Progress →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Mahdi | Jewels International School | Made for Grade 10 IB Design & Technology</p>
+        <p>Contact: <a href="mailto:drc.mahdi@gmail.com" style="color: white;">drc.mahdi@gmail.com</a></p>
+    </footer>
+</body>
+</html>
